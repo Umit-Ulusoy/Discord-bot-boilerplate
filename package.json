@@ -1,0 +1,15 @@
+{
+  "name": "discord-bot-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple discord bot boilerplate",
+  "author": "Ümit Ulusoy",
+  "license": "MIT",
+  "main": "bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.17.3"
+  }
+}

@@ -1,5 +1,6 @@
 import {
     Client,
+    Collection,
     GatewayIntentBits,
 } from 'discord.js';
 import config from './config.js';
@@ -17,6 +18,12 @@ const client = new Client({
 		GatewayIntentBits.GuildMessageReactions,
     ]
 });
+
+client.config = {
+    PREFIX: config.PREFIX
+};
+client.prefixCommands = new Collection();
+client.slashCommands = new Collection();
 
 initialLoaders(client);
 

@@ -8,10 +8,13 @@ export const loadCommands = async (client) => {
   const dirname = path.dirname(filename);
 
   const prefixCommandsPath = path.join(dirname, '..', 'commands', 'prefix-commands');
+  const slashCommandsPath = path.join(dirname, '..', 'commands', 'slash-commands');
 
   const prefixCommandFiles = readdirSync(prefixCommandsPath).filter((file) => file.endsWith('.js'));
+  const slashCommandFiles = readdirSync(slashCommandsPath).filter((file) => file.endsWith('.js'));
 
   let prefixCount = 0;
+  let slashCount = 0;
   let failedCount = 0;
   let failedCommands = [];
 
@@ -40,12 +43,40 @@ export const loadCommands = async (client) => {
     }
   }
 
+  for (const file of slashCommandFiles) {
+    const filePath = path.join(slashCommandsPath, file);
+    const fileUrl = pathToFileURL(filePath).href;
+
+    try {
+      const command = await import(fileUrl);
+
+      const { data, execute } = command.default;
+
+      if (!data || !execute) {
+        console.warn(`⚠️ ${file} command is missing "data" or "execute" property.`);
+        failedCount++;
+        failedCommands.push(file);
+        continue;
+      }
+
+      client.slashCommands.set(data.name, execute);
+      slashCount++;
+    } catch (error) {
+      console.error(`❌ Error loading slash command from ${file}:`, error);
+      failedCount++;
+      failedCommands.push(file);
+    }
+  }
 
   console.log(prefixCount
     ? `✅ ${prefixCount} prefix command(s) loaded successfully.`
     : '🤔 No prefix command found to load.'
   );
-  
+  console.log(slashCount
+    ? `✅ ${slashCount} slash command(s) loaded successfully.`
+    : '🤔 No slash command found to load.'
+  );
+
   if (failedCount) {
     console.error(`⚠️ Total failed commands: ${failedCount}`);
     console.error(`Failed command files: ${failedCommands.join(', ')}`);

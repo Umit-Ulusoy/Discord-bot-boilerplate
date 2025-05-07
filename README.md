@@ -25,13 +25,13 @@ A modular, scalable Discord bot template built with Discord.js v14, featuring su
    ```bash
    git clone https://github.com/umit-ulusoy/discord-bot-boilerplate.git
    cd discord-bot-boilerplate
-````
+```
 
 2. Install dependencies:
 
    ```bash
    npm install
-   ````
+   ```
 
 3. Copy the config.example.js file to config.js and fill in the required fields:
 
@@ -45,13 +45,13 @@ export default {
         UMIT: ''
     }
 }
-   ````
+   ```
 
 4. Start the bot:
 
    ```bash
    npm start
-   ````
+   ```
 
 ## 🐳 Docker Deployment
 
@@ -59,13 +59,13 @@ export default {
 
    ```bash
    docker build -t discord-bot .
-   ````
+   ```
 
 2. Run the Docker container:
 
    ```bash
 docker run -d --name discord-bot discord-bot
-   ````
+   ```
 
 ## 📁 Project Structure
 
